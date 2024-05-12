@@ -1,5 +1,7 @@
 # HVM-1: Video models trained on ~5k hours of human-like video data
 
+These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours of curated human-like video data (mostly egocentric, temporally extended, continuous video recordings) and then, optionally, finetuned on various downstream tasks using few-shot supervised learning.
+
 ## Loading the models
 Model names are specified in the format `x_y_z`, where `x` is the model type, `y` is the pretraining data the model is trained with, and `z` is the finetuning data the model is finetuned with (if any). All models have a ViT-H/14 backbone.
 
@@ -26,7 +28,7 @@ If you'd like to continue training the pretrained models on some new data with t
 
 **Pretraining data (`y`):** 
 * `hvm1`: pretrained with the full ~5k-hour human-like video dataset at 224x224 resolution. 
-* `hvm1@448`: pretrained the full ~5k-hour human-like video dataset at 448x448 resolution.
+* `hvm1@448`: pretrained with the full ~5k-hour human-like video dataset at 448x448 resolution.
 
 The models were all pretrained with the spatiotemporal MAE objective using code from [this repository](https://github.com/eminorhan/mae_st). The SLURM batch scripts used for training all models can be found [here](https://github.com/eminorhan/mae_st/tree/master/scripts). 
 
