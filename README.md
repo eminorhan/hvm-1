@@ -1,6 +1,6 @@
 # HVM-1: Video models trained on ~5k hours of human-like video data
 
-These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours of curated human-like video data (mostly egocentric, temporally extended, continuous video recordings) and then, optionally, finetuned on various downstream tasks using few-shot supervised learning.
+These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours of curated human-like video data (mostly egocentric, temporally extended, continuous video recordings) and then, optionally, finetuned on various downstream tasks with few-shot supervised training.
 
 ## Loading the models
 Model names are specified in the format `x_y_z`, where `x` is the model type, `y` is the pretraining data the model is trained with, and `z` is the finetuning data the model is finetuned with (if any). All models have a ViT-H/14 backbone.
