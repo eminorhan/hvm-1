@@ -14,7 +14,6 @@ from functools import partial
 
 import torch
 import torch.nn as nn
-from util.logging import master_print as print
 
 from util.video_vit import Attention, Block, PatchEmbed
 

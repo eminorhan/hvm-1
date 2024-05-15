@@ -42,8 +42,13 @@ def load_model(model_name):
     ckpt_filename = pretrain_data + '_' + finetune_data + '.pth'
     ckpt = hf_hub_download(repo_id='eminorhan/hvm-1', filename=ckpt_filename)
 
+    if pretrain_data == 'hvm1@448':
+        img_size = 448
+    else:
+        img_size = 224
+
     if model_type.startswith('mae'):
-        model = models_mae.mae_vit_huge_patch14()
+        model = models_mae.mae_vit_huge_patch14(img_size=img_size)
         ckpt = torch.load(ckpt, map_location='cpu')
         msg = model.load_state_dict(ckpt['model'], strict=True)
         print(f'Loaded with message: {msg}')
@@ -56,7 +61,7 @@ def load_model(model_name):
             num_classes = 1000
         else:
             num_classes = None
-        model = models_vit.vit_huge_patch14(num_classes=num_classes)
+        model = models_vit.vit_huge_patch14(img_size=img_size, num_classes=num_classes)
         ckpt = torch.load(ckpt, map_location='cpu')['model']
         msg = model.load_state_dict(ckpt, strict=False)
         print(f'Loaded with message: {msg}')

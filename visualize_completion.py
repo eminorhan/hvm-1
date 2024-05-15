@@ -16,7 +16,8 @@ STD = (0.225, 0.225, 0.225)
 
 def get_args_parser():
     parser = argparse.ArgumentParser('Visualize spatiotemporal MAE video completions', add_help=False)
-    parser.add_argument('--model_name', default='mae_s_none', type=str, help='Model identifier')
+    parser.add_argument('--model_name', default='mae_hvm1_none', type=str, help='Model identifier')
+    parser.add_argument('--img_size', default=224, type=int, help='Image size')
     parser.add_argument('--mask_ratio', default=0.9, type=float, help='Masking ratio (percentage of removed patches)')
     parser.add_argument('--mask_type', default='random', type=str, help='Mask type', choices=['random', 'temporal', 'center'])
     parser.add_argument('--video_dir', default='demo_videos', type=str, help='Video directory where the video files are kept')
@@ -181,7 +182,7 @@ def temporal_sampling(frames, start_idx, end_idx, num_samples):
     frames = torch.index_select(frames, 0, index)
     return frames
 
-def prepare_video(path):
+def prepare_video(path, img_size):
     video_container = av.open(path)
     frames, _, _ = pyav_decode(video_container, 4, 16, -1, num_clips_uniform=10, target_fps=30, use_offset=False)
     frames = temporal_sampling(frames, 0, 64, 16)
@@ -189,9 +190,9 @@ def prepare_video(path):
     frames = spatial_sampling(
         frames,
         spatial_idx=1,
-        min_scale=256,
-        max_scale=256,
-        crop_size=224,
+        min_scale=img_size+32,
+        max_scale=img_size+32,
+        crop_size=img_size,
         random_horizontal_flip=False,
         inverse_uniform_sampling=False,
         aspect_ratio=None,
@@ -240,7 +241,7 @@ if __name__ == '__main__':
     print('Selected video files:', selected_files)
 
     for v in selected_files:
-        vid = prepare_video(v)
+        vid = prepare_video(v, img_size=args.img_size)
         vid = vid.to(device)  # move input to device
 
         with torch.no_grad():
@@ -255,4 +256,4 @@ if __name__ == '__main__':
             vis = torch.cat((a, b, c), 0)
             print(vis.shape)
 
-            save_image(vis, f'{os.path.splitext(os.path.basename(v))[0]}.jpg', nrow=16, padding=1, normalize=True, scale_each=True)
+            save_image(vis, f'{os.path.splitext(os.path.basename(v))[0]}_{args.model_name}.jpg', nrow=16, padding=1, normalize=True, scale_each=True)

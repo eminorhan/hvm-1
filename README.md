@@ -2,6 +2,11 @@
 
 These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours of curated human-like video data (mostly egocentric, temporally extended, continuous video recordings) and then, optionally, finetuned on various downstream tasks with few-shot supervised training.
 
+## What you need
+Please see the automatically generated [`requirements.txt`](https://github.com/eminorhan/hvm-1/blob/master/requirements.txt) file specifying the environment under which the code was tested. A few notes:
+* The model implementatations use FlashAttention-2, so you will need `pytorch>=2.2`.
+* You will need the `av` library only for visualizing the model completions (as described below).
+
 ## Loading the models
 Model names are specified in the format `x_y_z`, where `x` is the model type, `y` is the pretraining data the model is trained with, and `z` is the finetuning data the model is finetuned with (if any). All models have a ViT-H/14 backbone.
 
@@ -54,7 +59,8 @@ In [`visualize_completion.py`](https://github.com/eminorhan/hvm-1/blob/master/vi
 ```python
 python -u visualize_completion.py \
         --model_name 'mae_hvm1@448_none' \
-        --mask_ratio 0.25 \
+        --img_size 448 \        
+        --mask_ratio 0.5 \
         --mask_type 'center' \
         --video_dir 'demo_videos' \
         --num_vids 16 \
@@ -72,21 +78,3 @@ This will randomly sample `num_vids` videos from `video_dir` and visualize the m
 ![](comps/temporal/mae_hvm1@448_none_temporal.jpg)
 
 Further examples can be found in the [comps](https://github.com/eminorhan/hvm-1/tree/master/comps) folder.
-
-## Visualizing the attention maps
-In [`visualize_attention.py`](https://github.com/eminorhan/hvm-1/blob/master/visualize_attention.py), I provide sample code to visualize the last-layer attention maps of the pretrained models. An example usage would be as follows:
-```python
-python -u visualize_attention.py \
-        --model_name 'vit_hvm1@448_none' \
-        --video_dir 'demo_videos' \
-        --num_vids 16 \
-        --device 'cuda'
-```
-Similar to the above, this will randomly sample `num_vids` videos from `video_dir` and visualize the last-layer attention maps (averaged over all attention heads) together with the original sequence of frames. Running the above will produce images like the following:
-
-**`vit_s_none`:**
-![](atts/vit_hvm1@448_none_y.jpg)
-
-Further examples can be found in the [atts](https://github.com/eminorhan/hvm-1/tree/master/atts) folder.
-
-It should be straightforward to hack the code to obtain the individual attention heads if you'd like to visualize them separately.
