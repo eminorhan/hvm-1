@@ -62,7 +62,7 @@ python -u visualize_completion.py \
         --img_size 448 \        
         --mask_ratio 0.5 \
         --mask_type 'center' \
-        --video_dir 'demo_videos' \
+        --video_dir VIDEO_DIR \
         --num_vids 16 \
         --device 'cuda'
 ```
