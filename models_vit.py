@@ -15,7 +15,7 @@ from functools import partial
 import torch
 import torch.nn as nn
 
-from util.video_vit import Attention, Block, PatchEmbed
+from helpers.video_vit import Attention, Block, PatchEmbed
 
 
 class VisionTransformer(nn.Module):

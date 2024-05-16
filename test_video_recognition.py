@@ -32,8 +32,6 @@ def get_args_parser():
     parser.add_argument("--out_dir", default="outputs", help="dump junk here")
     parser.add_argument("--device", default="cuda", help="device to use for training / testing")
     parser.add_argument("--num_workers", default=16, type=int)
-    parser.add_argument("--pin_mem", action="store_true", help="Pin CPU memory in DataLoader for more efficient (sometimes) transfer to GPU.")
-    parser.set_defaults(pin_mem=True)
 
     # Data parameters
     parser.add_argument("--val_dir", default="", help="path to val data")
@@ -95,7 +93,7 @@ def main(args):
     )
 
     val_sampler = SequentialSampler(val_dataset)
-    val_loader = DataLoader(val_dataset, sampler=val_sampler, batch_size=args.batch_size, num_workers=args.num_workers, pin_memory=args.pin_mem, drop_last=False)
+    val_loader = DataLoader(val_dataset, sampler=val_sampler, batch_size=args.batch_size, num_workers=args.num_workers, pin_memory=True, drop_last=False)
 
     # set up and load model
     model = load_model(args.model_name)
@@ -108,7 +106,7 @@ def main(args):
     print(f"Number of test images: {len(val_dataset)}")
     print(f"Acc@1: {test_stats['acc1']:.1f}%") 
     print(f"Acc@5: {test_stats['acc5']:.1f}%")
-    print(f"Loss: {test_stats['loss']:.2f}%")
+    print(f"Loss: {test_stats['loss']:.2f}")
 
 
 @torch.no_grad()
@@ -155,5 +153,5 @@ if __name__ == '__main__':
     val_files = find_mp4_files(directory=args.val_dir)
     write_csv(video_files=val_files, save_dir=args.out_dir, save_name=args.val_mode)
 
-    # finetune
+    # evaluate
     main(args)

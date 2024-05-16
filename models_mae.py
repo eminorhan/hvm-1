@@ -14,7 +14,7 @@ from functools import partial
 
 import torch
 import torch.nn as nn
-from util import video_vit
+from helpers import video_vit
 
 
 class MaskedAutoencoderViT(nn.Module):
