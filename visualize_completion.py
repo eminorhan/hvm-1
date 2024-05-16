@@ -9,7 +9,7 @@ import numpy as np
 
 from utils import load_model
 from torchvision.utils import save_image
-from util.decoder.utils import tensor_normalize, spatial_sampling
+from helpers.decoder.utils import tensor_normalize, spatial_sampling
 
 MEAN = (0.45, 0.45, 0.45)
 STD = (0.225, 0.225, 0.225)

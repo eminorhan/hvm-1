@@ -78,3 +78,15 @@ This will randomly sample `num_vids` videos from `video_dir` and visualize the m
 ![](comps/temporal/mae_hvm1@448_none_temporal.jpg)
 
 Further examples can be found in the [comps](https://github.com/eminorhan/hvm-1/tree/master/comps) folder.
+
+## Testing the finetuned models
+I also include some minimal test code in [`test_video_recognition.py`](https://github.com/eminorhan/hvm-1/blob/master/test_video_recognition.py) to check the validation accuracy of the finetuned models in downstream video recognition tasks. You can use it as follows:
+```python
+python -u test_video_recognition.py \
+        --model_name 'vit_hvm1@448_ssv2-50shot' \
+        --img_size 448 \
+        --batch_size 64 \
+        --val_dir VAL_DIR \
+        --train_jitter_scales 448 448
+```
+where `val_dir` is the path to the validation split of the appropriate downstream recognition task. 
