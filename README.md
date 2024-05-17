@@ -4,7 +4,7 @@ These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours 
 
 ## What you need
 Please see the automatically generated [`requirements.txt`](https://github.com/eminorhan/hvm-1/blob/master/requirements.txt) file specifying the environment under which the code was tested. A few notes:
-* The model implementatations use FlashAttention-2, so you will need `pytorch>=2.2`.
+* The model implementatations use FlashAttention-2 ([`F.scaled_dot_product_attention`](https://pytorch.org/docs/stable/generated/torch.nn.functional.scaled_dot_product_attention.html)), so you will need `pytorch>=2.2`.
 * You will need the `av` library only for visualizing the model completions (as described below).
 
 ## Loading the models

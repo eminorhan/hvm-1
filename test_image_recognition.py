@@ -56,7 +56,7 @@ def main(args):
         Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
     ])
 
-    val_dataset = ImageFolder(args.val_data_path, transform=val_transform)
+    val_dataset = ImageFolder(args.val_dir, transform=val_transform)
     val_sampler = SequentialSampler(val_dataset)
     val_loader = DataLoader(val_dataset, sampler=val_sampler, batch_size=args.batch_size, num_workers=args.num_workers, pin_memory=True, drop_last=False)
 
@@ -66,7 +66,7 @@ def main(args):
     print(f"Model = {model}")
 
     # evaluate model and print results
-    test_stats = evaluate(val_loader, model, device)
+    test_stats = evaluate(val_loader, model, device, args.num_frames)
     print("==========================================")
     print(f"Number of test images: {len(val_dataset)}")
     print(f"Acc@1: {test_stats['acc1']:.1f}%") 
