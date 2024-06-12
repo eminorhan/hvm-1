@@ -21,6 +21,13 @@ def get_available_models():
         'vit_hvm1@448_kinetics-50shot',
         'vit_hvm1@448_kinetics-10shot',
         'vit_hvm1@448_imagenet-2pt',
+        'mae_kinetics_none',
+        'vit_kinetics_none',
+        'vit_kinetics_ssv2-50shot',
+        'vit_kinetics_ssv2-10shot',
+        'vit_kinetics_kinetics-50shot',
+        'vit_kinetics_kinetics-10shot',
+        'vit_kinetics_imagenet-2pt'
         ]
 
     return available_models
@@ -35,7 +42,7 @@ def load_model(model_name):
 
     # checks
     assert model_type in ['mae', 'vit'], 'Unrecognized model type!'
-    assert pretrain_data in ['hvm1', 'hvm1@448'], 'Unrecognized pretraining data!'
+    assert pretrain_data in ['hvm1', 'hvm1@448', 'kinetics'], 'Unrecognized pretraining data!'
     assert finetune_data in ['none', 'ssv2-50shot', 'kinetics-50shot', 'ssv2-10shot', 'kinetics-10shot', 'imagenet-2pt'], 'Unrecognized finetuning data!'
 
     # download checkpoint from hf

@@ -11,7 +11,7 @@ Please see the automatically generated [`requirements.txt`](https://github.com/e
 Model names are specified in the format `x_y_z`, where `x` is the model type, `y` is the pretraining data the model is trained with, and `z` is the finetuning data the model is finetuned with (if any). All models have a ViT-H/14 backbone.
 
 * `x` can be one of `mae`, `vit`
-* `y` can be one of `hvm1`, `hvm1@448`
+* `y` can be one of `hvm1`, `hvm1@448`, `kinetics`
 * `z` can be one of `none`, `ssv2-10shot`, `ssv2-50shot`, `kinetics-10shot`, `kinetics-50shot`, `imagenet-2pt`
 
 Loading a pretrained model is then as easy as:
@@ -34,6 +34,7 @@ If you'd like to continue training the pretrained models on some new data with t
 **Pretraining data (`y`):** 
 * `hvm1`: pretrained with the full ~5k-hour human-like video dataset at 224x224 resolution. 
 * `hvm1@448`: pretrained with the full ~5k-hour human-like video dataset at 448x448 resolution.
+* `kinetics`: pretrained with the full ~1.3k-hour Kinetics-700 dataset at 224x224 resolution.
 
 The models were all pretrained with the spatiotemporal MAE objective using code from [this repository](https://github.com/eminorhan/mae_st). The SLURM batch scripts used for training all models can be found [here](https://github.com/eminorhan/mae_st/tree/master/scripts). 
 
