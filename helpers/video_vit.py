@@ -99,11 +99,16 @@ class Attention(nn.Module):
         self.input_size = input_size
         assert input_size[1] == input_size[2]
 
-    def forward(self, x):
+    def forward(self, x, return_attention=False):
         B, N, C = x.shape
         q = (self.q(x).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3))
         k = (self.k(x).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3))
         v = (self.v(x).reshape(B, N, self.num_heads, C // self.num_heads).permute(0, 2, 1, 3))
+
+        if return_attention:
+            attn = (q @ k.transpose(-2, -1)) * self.scale
+            attn = attn.softmax(dim=-1)
+            return attn
 
         x = F.scaled_dot_product_attention(q, k, v)  # flash attention-2
 
@@ -184,7 +189,11 @@ class Block(nn.Module):
         mlp_hidden_dim = int(dim * mlp_ratio)
         self.mlp = Mlp(in_features=dim, hidden_features=mlp_hidden_dim, act_layer=act_layer, drop=drop)
 
-    def forward(self, x):
+    def forward(self, x, return_attention=False):
+        if return_attention:
+            attn = self.attn(self.norm1(x), return_attention=True)
+            return attn
+
         x = x + self.drop_path(self.attn(self.norm1(x)))
         x = x + self.drop_path(self.mlp(self.norm2(x)))
         return x
