@@ -80,6 +80,25 @@ This will randomly sample `num_vids` videos from `video_dir` and visualize the m
 
 Further examples can be found in the [comps](https://github.com/eminorhan/hvm-1/tree/master/comps) folder.
 
+## Visualizing the attention maps
+In [`visualize_attention.py`](https://github.com/eminorhan/hvm-1/blob/master/visualize_attention.py), I provide sample code to visualize the last-layer attention maps of the pretrained models. An example usage would be as follows:
+```python
+python -u visualize_attention.py \
+        --model_name 'vit_hvm1@448_none' \
+        --video_dir 'vids' \
+        --img_size 448 \
+        --num_vids 16 \
+        --device 'cuda'
+```
+Similar to the above, this will randomly sample `num_vids` videos from `video_dir` and visualize the last-layer attention maps (averaged over all attention heads) together with the original sequence of frames. Running the above will produce images like the following:
+
+**`vit_hvm1@448_none`:**
+![](atts/vit_hvm1@448_none.jpg)
+
+Further examples can be found in the [atts](https://github.com/eminorhan/hvm-1/tree/master/atts) folder.
+
+It should be straightforward to hack the code to obtain the individual attention heads if you'd like to visualize them separately.
+
 ## Testing the finetuned models
 ### Testing on video recognition
 I include some minimal test code in [`test_video_recognition.py`](https://github.com/eminorhan/hvm-1/blob/master/test_video_recognition.py) to check the validation accuracy of the finetuned models in downstream video recognition tasks (SSV2 or Kinetics-700). You can use it as follows:

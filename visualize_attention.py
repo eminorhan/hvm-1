@@ -20,7 +20,7 @@ def get_args_parser():
     parser.add_argument('--img_size', default=224, type=int, help='Image size')
     parser.add_argument('--video_dir', default='demo_videos', type=str, help='Video directory where the video files are kept')
     parser.add_argument('--num_vids', default=1, type=int, help='Number of videos to do')
-    parser.add_argument('--device', default='cuda', help='device to use for testing')
+    parser.add_argument('--device', default='cuda', help='Device to use for testing')
 
     return parser
 
@@ -204,6 +204,7 @@ def list_subdirectories(directory):
     for entry in os.scandir(directory):
         if entry.is_dir():
             subdirectories.append(entry.path)
+    subdirectories.append(directory)        
     subdirectories.sort()  # Sort the list of subdirectories alphabetically
     return subdirectories
 
@@ -249,7 +250,7 @@ if __name__ == '__main__':
             attn = model.get_last_selfattention(vid)
             attn = attn.squeeze(0)
             attn = attn[:, 0, 1:]  # attentions with respect to cls token
-            attn = attn.view([16, 8, 16, 16])  # all 16 attention heads (dim: 0)
+            attn = attn.view([16, 8, args.img_size//14, args.img_size//14])  # all 16 attention heads (dim: 0)
             attn = torch.mean(attn, 0)
             attn = attn.unsqueeze(1)
             attn = attn.repeat(1, 3, 1, 1)
