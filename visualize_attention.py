@@ -249,7 +249,7 @@ if __name__ == '__main__':
             # video attention
             attn = model.get_last_selfattention(vid)
             attn = attn.squeeze(0)
-            attn = attn[:, 0, 1:]  # attentions with respect to cls token
+            attn = attn[:, 0, 1:]  # attentions with respect to cls token (index: 0)
             attn = attn.view([16, 8, args.img_size//14, args.img_size//14])  # all 16 attention heads (dim: 0)
             attn = torch.mean(attn, 0)
             attn = attn.unsqueeze(1)

@@ -1,5 +1,9 @@
 # HVM-1: Video models trained on ~5k hours of human-like video data
 
+This repository contains the models described in the following paper:
+
+Orhan AE (2024) [HVM-1: Large-scale video models pretrained with nearly 5000 hours of human-like video data.](https://arxiv.org/abs/2407.18067) arXiv:2407.18067.
+
 These models were pretrained with the spatiotemporal MAE algorithm on ~5k hours of curated human-like video data (mostly egocentric, temporally extended, continuous video recordings) and then, optionally, finetuned on various downstream tasks with few-shot supervised training.
 
 ## What you need
