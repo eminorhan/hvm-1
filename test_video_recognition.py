@@ -103,7 +103,7 @@ def main(args):
     # evaluate model and print results
     test_stats = evaluate(val_loader, model, device)
     print("==========================================")
-    print(f"Number of test images: {len(val_dataset)}")
+    print(f"Number of test videos: {len(val_dataset)}")
     print(f"Acc@1: {test_stats['acc1']:.1f}%") 
     print(f"Acc@5: {test_stats['acc5']:.1f}%")
     print(f"Loss: {test_stats['loss']:.2f}")
